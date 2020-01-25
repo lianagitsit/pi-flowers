@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
   res.send(`
@@ -33,4 +33,4 @@ app.get('/button', (req, res) => {
   res.json({success: 'test', route: 'button', requester: req.query.pi});
 });
 
-app.listen(port, () => console.log(`Listening on port ${port}!`));
+app.listen(PORT, () => console.log(`Listening on port ${PORT}!`));
