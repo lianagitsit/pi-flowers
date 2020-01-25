@@ -33,4 +33,4 @@ app.get('/button', (req, res) => {
   res.json({success: 'test', route: 'button', requester: req.query.pi});
 });
 
-app.listen(PORT, () => console.log(`Listening on port ${port}!`));
+app.listen(PORT, () => console.log(`Listening on port ${PORT}!`));
