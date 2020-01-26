@@ -61,7 +61,8 @@ app.get('/light', (req, res) => {
   res.json({
     route: 'light',
     requester: requestingPi,
-    shouldLight: shouldLight
+    shouldLight: shouldLight,
+    heardButtonPressed: buttonPressed
   });
 });
 

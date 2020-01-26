@@ -36,7 +36,8 @@ def loop():
         while True:
                 light = requests.get(URL+"/light?pi="+pi+"&button="+wasButtonPressed)
                 response = light.json()
-                wasButtonPressed = "false"
+                if response["heardButtonPressed"]:
+                        wasButtonPressed = "false"
                 print(response)
                 if response["shouldLight"] == True:
                         GPIO.output(LedPin, GPIO.LOW)
