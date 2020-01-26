@@ -20,6 +20,9 @@ def swLed(ev=None):
 	print("button pressed")
 	requests.get(URL+"/button?pi="+pi)
 
+def debug():
+        GPIO.output(LedPin, GPIO.LOW)
+        
 def loop():
 	# wait for falling and set bouncetime to prevent the
         #callback function from being called multiple times when the button is pressed
@@ -32,7 +35,7 @@ def loop():
 			GPIO.output(LedPin, GPIO.LOW)
 			time.sleep(1)
 			GPIO.output(LedPin, GPIO.HIGH)
-		time.sleep(2)
+		time.sleep(.5)
 
 def destroy():
 	GPIO.output(LedPin, GPIO.HIGH)     # led off
