@@ -1,0 +1,14 @@
+(1) Add this to the bottom of ~/.bashrc
+
+function sl() {
+  curl "https://piflowertest.herokuapp.com/light?pi=[ENTER YOUR ACTUAL PI HERE]&button=true"
+}
+
+(2) execute this command in your shell:
+
+source ~/.bashrc 
+
+(3) the command sl will now work!
+
+eqmvii@eqmvii-VirtualBox:~$ sl
+{"route":"light","requester":"eric","shouldLight":false,"heardButtonPressed":true}
