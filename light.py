@@ -17,6 +17,15 @@ def setup():
         GPIO.setup(BtnPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.output(LedPin, GPIO.HIGH) # Set LedPin high(+3.3V) to off led
 
+def ready():
+	i = 0
+	while i < 3:
+		GPIO.output(LedPin, GPIO.LOW)
+		time.sleep(0.3)
+		GPIO.output(LedPin, GPIO.HIGH)
+		time.sleep(0.3)
+		i += 1
+
 def pressButton(ev=None):
         global wasButtonPressed
         wasButtonPressed = "true"
@@ -41,9 +50,9 @@ def loop():
                 print(response)
                 if response["shouldLight"] == True:
                         GPIO.output(LedPin, GPIO.LOW)
-                        time.sleep(5)
+                        time.sleep(2)
                         GPIO.output(LedPin, GPIO.HIGH)
-                time.sleep(2)
+                time.sleep(1)
 
 def destroy():
         GPIO.output(LedPin, GPIO.HIGH)     # led off
@@ -51,6 +60,7 @@ def destroy():
 
 if __name__ == '__main__':     # Program start from here
         setup()
+	ready()
         try:
                 loop()
         except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
