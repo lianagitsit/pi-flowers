@@ -15,16 +15,18 @@ let piMatches = {
 app.get('/', (req, res) => {
   res.send(`
   <html>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="/frontend.js"></script>
     <h1>Pi Flowers</h1>
     <hr />
     <h2>Liana Flower</h2>
-    <p><strong>Lit: </strong>(${lightStatus.liana})</p>
+    <p><strong>Lit: </strong> <span id=liana>${lightStatus.liana}</span></p>
     <ul>
       <li><a href="/button?pi=liana">Press Button</a></li>
       <li><a href="/light?pi=liana">Should I light up?</a></li>
     </ul>
     <h2>Eric Flower</h2>
-    <p><strong>Lit: </strong>(${lightStatus.eric})</p>
+    <p><strong>Lit: </strong><span id=eric>${lightStatus.eric}</span></p>
     <ul>
       <li><a href="/button?pi=eric">Press Button</a></li>
       <li><a href="/light?pi=eric">Should I light up?</a></li>
@@ -34,6 +36,10 @@ app.get('/', (req, res) => {
   </html>
   `);
 });
+
+app.get('/status', (_req, res) => {
+  res.json(lightStatus);
+})
 
 // Determine if the pi should light up, then reset status to false
 app.get('/light', (req, res) => {
@@ -63,5 +69,8 @@ app.get('/button', (req, res) => {
     requester: requestingPi
   });
 });
+
+// Serve static files from the /public directory
+app.use(express.static('public'))
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}!`));
