@@ -4,7 +4,13 @@ import time
 import requests
 
 URL = "https://piflowertest.herokuapp.com"
-pi = "liana"
+
+# Read the pi's name from a config file
+# That isn't include in the git repository
+f = open("pi_name.txt", "r")
+pi = f.read().strip()
+print pi
+f.close
 
 LedPin = 17
 BtnPin = 18

@@ -1,5 +1,9 @@
 # pi-flowers
 
+# config 
+
+create a file called pi_name.txt in the root file, and enter the pi name in that file as the only line.
+
 # Server for pi-flowers
 
 This server listens for pi-flower button presses. When one pi-flower has its button pressed, the server tells the other to light up.
