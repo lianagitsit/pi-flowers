@@ -21,6 +21,9 @@ def pressButton(ev=None):
         global wasButtonPressed
         wasButtonPressed = "true"
         print("button pressed")
+        GPIO.output(LedPin, GPIO.LOW)
+        time.sleep(0.5)
+        GPIO.output(LedPin, GPIO.HIGH)
 
 def debug():
         GPIO.output(LedPin, GPIO.LOW)
@@ -37,9 +40,9 @@ def loop():
                 print(response)
                 if response["shouldLight"] == True:
                         GPIO.output(LedPin, GPIO.LOW)
-                        time.sleep(3)
+                        time.sleep(5)
                         GPIO.output(LedPin, GPIO.HIGH)
-                time.sleep(1)
+                time.sleep(2)
 
 def destroy():
         GPIO.output(LedPin, GPIO.HIGH)     # led off
