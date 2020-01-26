@@ -24,3 +24,11 @@ Test starting and stopping:
 
 Run this command to enable the app to run on startup:
 `sudo systemctl enable pi-flowers.service`
+
+# SSH into Pi
+
+Get Pi's IP address:
+`ifconfig` 
+
+On remote:
+`ssh pi@<IP address>`
