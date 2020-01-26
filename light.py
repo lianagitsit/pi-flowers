@@ -9,7 +9,7 @@ URL = "https://piflowertest.herokuapp.com"
 # That isn't include in the git repository
 f = open("pi_name.txt", "r")
 pi = f.read().strip()
-print pi
+print(pi)
 f.close
 
 LedPin = 17
