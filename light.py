@@ -24,13 +24,13 @@ def setup():
         GPIO.output(LedPin, GPIO.HIGH) # Set LedPin high(+3.3V) to off led
 
 def ready():
-	i = 0
-	while i < 3:
-		GPIO.output(LedPin, GPIO.LOW)
-		time.sleep(0.3)
-		GPIO.output(LedPin, GPIO.HIGH)
-		time.sleep(0.3)
-		i += 1
+        i = 0
+        while i < 3:
+                GPIO.output(LedPin, GPIO.LOW)
+                time.sleep(0.3)
+                GPIO.output(LedPin, GPIO.HIGH)
+                time.sleep(0.3)
+                i += 1
 
 def pressButton(ev=None):
         global wasButtonPressed
