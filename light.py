@@ -4,7 +4,13 @@ import time
 import requests
 
 URL = "https://piflowertest.herokuapp.com"
-pi = "liana"
+
+# Read the pi's name from a config file
+# That isn't include in the git repository
+f = open("pi_name.txt", "r")
+pi = f.read().strip()
+print(pi)
+f.close
 
 LedPin = 17
 BtnPin = 18
@@ -16,6 +22,15 @@ def setup():
         # Set BtnPin's mode is input, and pull up to high level(3.3V)
         GPIO.setup(BtnPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.output(LedPin, GPIO.HIGH) # Set LedPin high(+3.3V) to off led
+
+def ready():
+        i = 0
+        while i < 3:
+                GPIO.output(LedPin, GPIO.LOW)
+                time.sleep(0.3)
+                GPIO.output(LedPin, GPIO.HIGH)
+                time.sleep(0.3)
+                i += 1
 
 def pressButton(ev=None):
         global wasButtonPressed
@@ -41,9 +56,9 @@ def loop():
                 print(response)
                 if response["shouldLight"] == True:
                         GPIO.output(LedPin, GPIO.LOW)
-                        time.sleep(5)
+                        time.sleep(2)
                         GPIO.output(LedPin, GPIO.HIGH)
-                time.sleep(2)
+                time.sleep(1)
 
 def destroy():
         GPIO.output(LedPin, GPIO.HIGH)     # led off
@@ -51,6 +66,7 @@ def destroy():
 
 if __name__ == '__main__':     # Program start from here
         setup()
+        ready()
         try:
                 loop()
         except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
