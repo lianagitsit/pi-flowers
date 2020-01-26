@@ -22,14 +22,14 @@ app.get('/', (req, res) => {
     <h2>Liana Flower</h2>
     <p><strong>Lit: </strong> <span id=liana>${lightStatus.liana}</span></p>
     <ul>
-      <li><a href="/button?pi=liana">Press Button</a></li>
-      <li><a href="/light?pi=liana">Should I light up?</a></li>
+      <li><a href="/light?pi=liana&button=true">Press Button</a></li>
+      <li><a href="/light?pi=liana&button=false">Should I light up?</a></li>
     </ul>
     <h2>Eric Flower</h2>
     <p><strong>Lit: </strong><span id=eric>${lightStatus.eric}</span></p>
     <ul>
-      <li><a href="/button?pi=eric">Press Button</a></li>
-      <li><a href="/light?pi=eric">Should I light up?</a></li>
+      <li><a href="/light?pi=eric&button=true">Press Button</a></li>
+      <li><a href="/light?pi=eric&button=false">Should I light up?</a></li>
     </ul>
     <hr />
     Made by <a href="https://github.com/lianagitsit">Liana</a> and <a href="https://github.com/eqmvii">Eric</a>
@@ -41,13 +41,22 @@ app.get('/status', (_req, res) => {
   res.json(lightStatus);
 })
 
-// Determine if the pi should light up, then reset status to false
+// Determine if the pi should light up, then reset status to false.
+// If the button has been pressed, tell the other pi to light up.
 app.get('/light', (req, res) => {
   let requestingPi = req.query.pi;
-  console.log(`light poll received from ${requestingPi}`);
+  let buttonPressed = (req.query.button == 'true');
+  console.log(`@ @ @ @ @ @ @ @ Poll from ${requestingPi}. buttonPressed: ${buttonPressed}`);
 
   let shouldLight = lightStatus[requestingPi];
-  lightStatus[requestingPi] = false;
+
+  if (shouldLight) {
+    lightStatus[requestingPi] = false;
+  }
+
+  if (buttonPressed) {
+    lightStatus[piMatches[requestingPi]] = true;
+  }
 
   res.json({
     route: 'light',
@@ -56,19 +65,20 @@ app.get('/light', (req, res) => {
   });
 });
 
+// DEPRECATED -- used to be an additional request for the button press
 // Tell the other pi to light up the next time it polls /light
-app.get('/button', (req, res) => {
-  let requestingPi = req.query.pi;
-  console.log(`button press received from ${requestingPi}`);
+// app.get('/button', (req, res) => {
+//   let requestingPi = req.query.pi;
+//   console.log(`button press received from ${requestingPi}`);
 
-  // Set the OTHER pi's lightStatus to true
-  lightStatus[piMatches[requestingPi]] = true;
+//   // Set the OTHER pi's lightStatus to true
+//   lightStatus[piMatches[requestingPi]] = true;
 
-  res.json({
-    route: 'button',
-    requester: requestingPi
-  });
-});
+//   res.json({
+//     route: 'button',
+//     requester: requestingPi
+//   });
+// });
 
 // Serve static files from the /public directory
 app.use(express.static('public'))
