@@ -49,7 +49,11 @@ app.get('/light', (req, res) => {
   console.log(`@ @ @ @ @ @ @ @ Poll from ${requestingPi}. buttonPressed: ${buttonPressed}`);
 
   let shouldLight = lightStatus[requestingPi];
-  lightStatus[requestingPi] = false;
+
+  if (shouldLight) {
+    lightStatus[requestingPi] = false;
+  }
+
   if (buttonPressed) {
     lightStatus[piMatches[requestingPi]] = true;
   }
